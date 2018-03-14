@@ -1,0 +1,73 @@
+<div *ngIf="showList">
+  <button (click)="showAdd=true; showList=false" class="btn btn-success">Add user</button>
+  <table>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users; let i = index">
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td>
+        <button (click)="deleteUser(user.id, i)">X</button>
+      </td>
+      <td>
+        <button (click)="showEdit=true; showList=false; copyCurrentUser(i)">Edit</button>
+      </td>
+      <td>
+        <button (click)="showDetails=true; showList=false; copyCurrentUser(i)">Details</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showAdd">
+  <form class="container"
+    #addUserForm = "ngForm"
+    (ngSubmit) = "addUser(addUserForm.value)">
+
+      <input type="text" name="name" placeholder="Name" ngModel>
+      <input type="number" name="age" placeholder="Age" ngModel>
+      <input type="text" name="email" placeholder="Email" ngModel>
+      <input type="text" name="street" placeholder="Street" ngModel>
+      <input type="text" name="city" placeholder="City" ngModel>
+      <input type="text" name="state" placeholder="State" ngModel>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button (click)="showAdd=false; showList=true" class="btn btn-success">Cancel</button>
+  </form>
+</div>
+
+<div *ngIf="showEdit">
+  <form class="container"
+    #editUserForm = "ngForm"
+    (ngSubmit) = "editUser(editUserForm.value)">
+      <input type="hidden" name="id" [(ngModel)]="currentUser.id" [ngModelOptions]="{updateOn: 'blur'}">
+      <input type="text" name="name" placeholder="Name"  [(ngModel)]="currentUser.name" [ngModelOptions]="{updateOn: 'blur'}">
+      <input type="number" name="age" placeholder="Age" [(ngModel)]="currentUser.age" [ngModelOptions]="{updateOn: 'blur'}">
+      <input type="text" name="email" placeholder="Email" [(ngModel)]="currentUser.email" [ngModelOptions]="{updateOn: 'blur'}">
+      <input type="text" name="street" placeholder="Street" [(ngModel)]="currentUser.street" [ngModelOptions]="{updateOn: 'blur'}">
+      <input type="text" name="city" placeholder="City" [(ngModel)]="currentUser.city" [ngModelOptions]="{updateOn: 'blur'}">
+      <input type="text" name="state" placeholder="State" [(ngModel)]="currentUser.state" [ngModelOptions]="{updateOn: 'blur'}">
+
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button (click)="showEdit=false; showList=true" class="btn btn-success">Cancel</button>
+  </form>
+</div>
+
+<div *ngIf="showDetails">
+  <h1> {{currentUser.name}} </h1>
+  <h2> <b>Age:</b> {{currentUser.age}} </h2>
+  <h2> <b>Email:</b> {{currentUser.email}} </h2>
+  <h2> <b>Street:</b> {{currentUser.street}} </h2>
+  <h2> <b>City:</b> {{currentUser.city}} </h2>
+  <h2> <b>State:</b> {{currentUser.state}} </h2>
+
+  <button (click)="showDetails=false; showList=true" class="btn btn-success">Ok</button>
+</div>
