@@ -1,10 +1,10 @@
 module.exports = (app) => {
   const db = require('../libs/db_conn.js');
 
-  const UserController = {
+  const CarController = {
 
     getAll(req, res) {
-      let sql = 'SELECT * FROM users';
+      let sql = 'SELECT * FROM cars';
       let query = db.query(sql, (err, results) => {
         if(err) throw err;
         res.send({data: results});
@@ -12,7 +12,7 @@ module.exports = (app) => {
     },
 
     get(req, res) {
-      let sql = `SELECT * FROM users WHERE id = ${req.params.id}`;
+      let sql = `SELECT * FROM cars WHERE id = ${req.params.id}`;
       let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.send({data: result});
@@ -21,7 +21,7 @@ module.exports = (app) => {
 
     add(req, res) {
       let data = req.body;
-      let sql = 'INSERT INTO users SET ?';
+      let sql = 'INSERT INTO cars SET ?';
       let query = db.query(sql, data, (err, result) => {
         if(err) throw err;
         res.send({data: result.insertId});
@@ -30,7 +30,7 @@ module.exports = (app) => {
 
     update(req, res) {
       let data = req.body;
-      let sql = `UPDATE users SET ? WHERE id = ${req.params.id}`;
+      let sql = `UPDATE cars SET ? WHERE id = ${req.params.id}`;
       let query = db.query(sql, data, (err, result) => {
         if(err) throw err;
         res.send({data: "Atualizado com sucesso!"});
@@ -38,12 +38,12 @@ module.exports = (app) => {
     },
 
     delete(req, res) {
-      let sql = `DELETE FROM users WHERE id = ${req.params.id}`;
+      let sql = `DELETE FROM cars WHERE id = ${req.params.id}`;
       let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.send({data: "Deletado com sucesso!"});
       })
     }
   }
-  return UserController
+  return CarController
 };    
